@@ -447,10 +447,48 @@
         }
 
         .footer-logo {
-            max-width: 150px;
-            height: auto;
+            max-width: 80px;
+            height: 80px;
+            object-fit: contain;
             margin-bottom: 20px;
-            opacity: 0.9;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 50%;
+            border: 2px solid var(--gcba-yellow);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-logo:hover {
+            transform: scale(1.08);
+        }
+
+        .brand-badge-container {
+            background: #ffffff;
+            padding: 12px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 16px rgba(254, 203, 47, 0.25);
+            border: 3px solid var(--gcba-yellow);
+            width: 86px;
+            height: 86px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .brand-badge-container:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 24px rgba(254, 203, 47, 0.4);
+        }
+
+        .brand-badge-logo {
+            height: 52px;
+            width: 52px;
+            object-fit: contain;
+            display: block;
         }
 
         /* Responsive adjustments */
@@ -728,7 +766,7 @@
     </nav>
 
     <header class="hero">
-        <div class="hero-content"><div style="background: white; padding: 10px; border-radius: 8px; display: inline-block; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);"><img src="logo.png" alt="Logo ASIMM" style="height: 60px; width: auto; display: block;"></div>
+        <div class="hero-content"><div class="brand-badge-container"><img src="logo.png" alt="Logo ASIMM" class="brand-badge-logo"></div>
             <h1 class="hero-title">
                 <span class="text-white">SEGURIDAD E HIGIENE</span><br>
                 <span class="text-yellow">PARA MOTOCICLISTAS</span>
