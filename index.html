@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const showCap = urlParams.get('cap');
+        if (showCap) {
+            document.documentElement.classList.add('chapter-view-mode');
+            document.addEventListener('DOMContentLoaded', () => {
+                const targetCap = document.getElementById(showCap);
+                if (targetCap) {
+                    targetCap.classList.add('active-view');
+                }
+            });
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Curso de Seguridad e Higiene para Motociclistas</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            /* ASIMM Official Colors / Formacion Vial Extreme */
+            --gcba-navy: #001d3d;
+            --gcba-navy-dark: #000814;
+            --gcba-cyan: #00B4D8;
+            --gcba-yellow: #fecb2f;
+            --gcba-orange: #ff4139;
+            /* Brand Red */
+            --white: #FFFFFF;
+            --danger-red: #ff4139;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(circle at center, var(--gcba-navy) 0%, var(--gcba-navy-dark) 100%);
+            background-attachment: fixed;
+            color: var(--white);
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        header {
+            background: rgba(0, 29, 61, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--white);
+            font-size: 2rem;
+            margin-bottom: 8px;
+            font-weight: 800;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: var(--gcba-yellow);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .toc {
+            background: rgba(0, 29, 61, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .toc h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--gcba-yellow);
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+            font-weight: 800;
+            font-style: italic;
+            text-transform: uppercase;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toc li:last-child {
+            border-bottom: none;
+        }
+
+        .toc a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            display: block;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .toc a:hover {
+            transform: translateX(5px);
+            color: var(--gcba-yellow);
+        }
+
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .chapter {
+            background: #1f2532;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .chapter:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6);
+            border-color: rgba(254, 203, 47, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .card-icon-badge {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .card-icon-badge svg {
+            width: 36px;
+            height: 36px;
+            stroke-width: 1.5;
+        }
+
+        .card-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gcba-yellow);
+            border: 1px solid rgba(254, 203, 47, 0.4);
+            padding: 4px 12px;
+            border-radius: 2px;
+            text-transform: uppercase;
+        }
+
+        .card-arrow {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+
+        .chapter h2.card-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--white);
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            border-bottom: none;
+            padding-bottom: 0;
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .chapter h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--white);
+            font-size: 1.1rem;
+            margin: 20px 0 10px 0;
+            font-weight: 700;
+        }
+
+        .chapter p,
+        .chapter ul {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .chapter ul {
+            margin: 14px 0 14px 28px;
+        }
+
+        .chapter li {
+            margin-bottom: 10px;
+        }
+
+        .alert {
+            padding: 18px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid;
+            font-size: 1rem;
+        }
+
+        .alert-warning {
+            background: rgba(254, 203, 47, 0.15);
+            border-color: var(--gcba-yellow);
+            color: var(--gcba-yellow);
+        }
+
+        .alert-danger {
+            background: rgba(255, 65, 57, 0.15);
+            border-color: var(--gcba-orange);
+            color: var(--gcba-orange);
+        }
+
+        .alert-info {
+            background: rgba(0, 180, 216, 0.15);
+            border-color: var(--gcba-cyan);
+            color: #90E0EF;
+        }
+
+        strong {
+            color: var(--gcba-yellow);
+            font-weight: 700;
+        }
+
+        /* Navbar & Hero Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: var(--gcba-navy-dark);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-brand {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .text-white {
+            color: var(--white);
+        }
+
+        .text-yellow {
+            color: var(--gcba-yellow);
+        }
+
+        .nav-btn {
+            background-color: var(--gcba-yellow);
+            color: var(--gcba-navy-dark);
+            border: none;
+            padding: 8px 16px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-style: italic;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 5% 40px;
+            margin-bottom: 40px;
+            background: linear-gradient(100deg, rgba(0, 29, 61, 0.95) 0%, rgba(0, 29, 61, 0.6) 50%, rgba(0, 8, 20, 0.85) 100%), none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to top, var(--gcba-navy-dark), transparent);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.95;
+            margin-bottom: 24px;
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 16px;
+            max-width: 800px;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin: 0 auto 40px auto;
+            max-width: 600px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--gcba-yellow);
+            color: var(--white);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            text-decoration: none;
+            padding: 18px 36px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-style: italic;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            box-shadow: 5px 5px 0px rgba(0, 0, 0, 1);
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0 0 0 rgba(0, 0, 0, 1);
+        }
+
+        /* Estilos para el botón H5P */
+        .h5p-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background-color: var(--gcba-yellow);
+            color: var(--white);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-style: italic;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            margin-top: 24px;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            margin-top: auto;
+        }
+
+        .h5p-btn:hover {
+            transform: translate(-2px, -2px);
+            background-color: #ffda60;
+            box-shadow: 6px 6px 0px rgba(0, 0, 0, 1);
+        }
+
+        .h5p-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px rgba(0, 0, 0, 1);
+        }
+
+        .h5p-hint {
+            display: block;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #90E0EF;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: #90E0EF;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(0, 180, 216, 0.2);
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-logo {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.8rem 5%;
+            }
+
+            .nav-brand {
+                font-size: 0.95rem;
+            }
+
+            .hero {
+                padding: 100px 5% 30px;
+                min-height: auto;
+            }
+
+            .hero-title {
+                font-size: clamp(2.2rem, 8vw, 3.5rem);
+                margin-bottom: 16px;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                margin-bottom: 24px;
+            }
+
+            .chapter {
+                padding: 20px 16px;
+            }
+
+            .h5p-btn,
+            .btn-primary {
+                font-size: 0.95rem;
+                padding: 14px;
+            }
+
+            .modal-content {
+                padding: 24px;
+                width: 95%;
+            }
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: #1f2532;
+            padding: 40px;
+            width: 90%;
+            max-width: 450px;
+            border-radius: 8px;
+            border: 1px solid rgba(254, 203, 47, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--gcba-yellow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gcba-yellow);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 0 2px rgba(254, 203, 47, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        select.form-input option {
+            background-color: #1f2532;
+            color: var(--white);
+        }
+
+        #loginForm .btn-primary {
+            width: 100%;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+
+        .nav-dropdown-container {
+            position: relative;
+        }
+
+        .nav-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #1f2532;
+            border: 1px solid rgba(254, 203, 47, 0.3);
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            width: 320px;
+            max-width: calc(100vw - 32px);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 999;
+            padding: 8px 0;
+            margin-top: 8px;
+        }
+
+        .nav-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-dropdown ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-dropdown a {
+            display: block;
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: background 0.2s, color 0.2s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-dropdown li:last-child a {
+            border-bottom: none;
+        }
+
+        .nav-dropdown a:hover {
+            background-color: rgba(254, 203, 47, 0.1);
+            color: var(--gcba-yellow);
+        }
+
+        .chapter-toggle {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .chapter-toggle:hover {
+            opacity: 0.8;
+        }
+
+        .chapter-content-body {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 0.4s ease forwards;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chapter.active .chapter-content-body {
+            display: block;
+        }
+
+        .card-arrow {
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .chapter.active .card-arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Single Chapter View Mode Styles */
+        html.chapter-view-mode .navbar,
+        html.chapter-view-mode .hero,
+        html.chapter-view-mode .toc,
+        html.chapter-view-mode .chapter {
+            display: none !important;
+        }
+
+        html.chapter-view-mode .chapter.active-view {
+            display: block !important;
+        }
+
+        html.chapter-view-mode .chapter.active-view .chapter-content-body {
+            display: block !important;
+            animation: none;
+        }
+
+        html.chapter-view-mode .chapter.active-view .card-arrow {
+            display: none !important;
+        }
+
+        html.chapter-view-mode .chapter.active-view .chapter-toggle {
+            pointer-events: none;
+            cursor: default;
+        }
+
+        html.chapter-view-mode .main-content {
+            padding-top: 40px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar" style="position: relative;">
+        <div class="nav-brand">
+            <span class="text-white">CFL N° 412</span> <span class="text-yellow">ASIMM</span>
+        </div>
+        <div class="nav-dropdown-container">
+            <button class="nav-btn" id="modulosBtn">MÓDULOS ˅</button>
+            <div class="nav-dropdown" id="modulosDropdown">
+                <ul>
+                    <li><a href="javascript:void(0)"
+                            onclick="openActivityModal('actividades-extra/index.html?embedded=true#/introduccion')"
+                            class="dropdown-link">INTRODUCCIÓN</a></li>
+
+                    <li><a href="javascript:void(0)"
+                            onclick="openActivityModal('actividades-extra/index.html?embedded=true#/prioridades')"
+                            class="dropdown-link">PRIORIDADES DE PASO</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content"><div style="background: white; padding: 10px; border-radius: 8px; display: inline-block; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);"><img src="logo.png" alt="Logo ASIMM" style="height: 60px; width: auto; display: block;"></div>
+            <h1 class="hero-title">
+                <span class="text-white">SEGURIDAD E HIGIENE</span><br>
+                <span class="text-yellow">PARA MOTOCICLISTAS</span>
+            </h1>
+            <p class="hero-subtitle">Curso de Seguridad Vial y Laboral - CFL N° 412 ASIMM</p>
+            <p class="hero-description">Tu seguridad es el motor de tu futuro. Herramientas esenciales de seguridad e higiene laboral para motociclistas, mensajeros y delivery.</p>
+            <button id="openLoginBtn" class="btn-primary" style="margin-top: 15px;">COMIENZA TU AVENTURA &rarr;</button>
+        </div>
+    </header>
+
+    <div class="container main-content">
+
+        <div class="chapter-grid">
+            <div id="cap1" class="chapter">
+                <a href="javascript:void(0)" onclick="openActivityModal('index_bundled.html?cap=cap1')"
+                    class="chapter-toggle" style="text-decoration:none; color:inherit; display:block;">
+                    <div class="card-header">
+                        <div class="card-icon-badge">
+                            <svg fill="none" stroke="var(--gcba-yellow)" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z">
+                                </path>
+                            </svg>
+                            <span class="card-badge">Capítulo 1</span>
+                        </div>
+                        <div class="card-arrow">&rarr;</div>
+                    </div>
+                    <h2 class="card-title">Percepción de la Velocidad y Distancias de Frenado</h2>
+                </a>
+                <div class="chapter-content-body">
+
+                    <p>La velocidad es uno de los factores más determinantes en la seguridad vial. A mayor velocidad,
+                        mayor
+                        es
+                        la energía cinética involucrada y mayor la distancia necesaria para detenerse.</p>
+
+                    <div class="alert alert-danger">
+                        <strong>Dato Crítico:</strong> Si duplicas la velocidad, cuadruplicas la energía de impacto.
+                    </div>
+
+                    <h3>Distancia de Detención</h3>
+                    <p>La distancia total necesaria para detener un vehículo consta de dos componentes:</p>
+                    <ul>
+                        <li><strong>Distancia de Reacción:</strong> Espacio recorrido mientras el conductor percibe el
+                            peligro y
+                            reacciona (aproximadamente 1 segundo)</li>
+                        <li><strong>Distancia de Frenado:</strong> Espacio que recorre el vehículo desde que se aplican
+                            los
+                            frenos hasta detenerse completamente</li>
+                    </ul>
+
+                    <h3>Ejemplos Prácticos</h3>
+                    <ul>
+                        <li>A 40 km/h: ~22 metros totales</li>
+                        <li>A 60 km/h: ~45 metros totales</li>
+                        <li>A 80 km/h: ~75 metros totales</li>
+                        <li>A 100 km/h: ~110 metros totales</li>
+                    </ul>
+
+                    <div class="alert alert-warning">
+                        <strong>Importante:</strong> Estas distancias son para condiciones ideales (asfalto seco,
+                        neumáticos
+                        en
+                        buen estado, conductor alerta).
+                    </div>
+
+                    <a href="https://app.lumi.education/run/ufYWM2" target="_blank" class="h5p-btn">
+                        📚 VER CONTENIDO INTERACTIVO (H5P)
+                    </a>
+                    <span class="h5p-hint">Se abrirá en una nueva pestaña (Recomendado para WhatsApp)</span>
+                </div>
+            </div>
+
+            <div id="cap2" class="chapter">
+                <a href="javascript:void(0)" onclick="openActivityModal('index_bundled.html?cap=cap2')"
+                    class="chapter-toggle" style="text-decoration:none; color:inherit; display:block;">
+                    <div class="card-header">
+                        <div class="card-icon-badge">
+                            <svg fill="none" stroke="var(--gcba-yellow)" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            <span class="card-badge">Capítulo 2</span>
+                        </div>
+                        <div class="card-arrow">&rarr;</div>
+                    </div>
+                    <h2 class="card-title">Gestión de la Mirada y Zonas Ciegas</h2>
+                </a>
+                <div class="chapter-content-body">
+
+                    <p>El 90% de la información necesaria para conducir ingresa al cerebro a través de los ojos. La
+                        gestión
+                        correcta de la mirada es fundamental para una conducción segura.</p>
+
+                    <h3>Mirada Panorámica</h3>
+                    <p>Los conductores expertos mantienen una mirada amplia que abarca:</p>
+                    <ul>
+                        <li>Punto focal lejano</li>
+                        <li>Visión periférica activa</li>
+                        <li>Revisión frecuente de espejos</li>
+                        <li>Anticipación de movimientos de otros usuarios</li>
+                    </ul>
+
+                    <h3>Zonas Ciegas de Camiones</h3>
+                    <p>Los camiones tienen cuatro zonas principales donde NO pueden ver a los motociclistas:</p>
+
+                    <div class="alert alert-danger">
+                        <strong>ZONA FRONTAL:</strong> Hasta 6 metros adelante del camión son invisibles para el
+                        conductor.
+                    </div>
+
+                    <div class="alert alert-danger">
+                        <strong>ZONA LATERAL DERECHA:</strong> La más peligrosa. TODO el lateral derecho es una zona
+                        ciega.
+                        Peligro crítico en giros a la derecha.
+                    </div>
+
+                    <div class="alert alert-danger">
+                        <strong>ZONA LATERAL IZQUIERDA:</strong> Aunque el conductor tiene espejo de ese lado, hay
+                        bandas
+                        ciegas
+                        en ciertos ángulos.
+                    </div>
+
+                    <div class="alert alert-danger">
+                        <strong>ZONA TRASERA:</strong> Hasta 30 metros detrás del camión son invisibles para el
+                        conductor.
+                    </div>
+
+                    <h3>Regla de Seguridad</h3>
+                    <p><strong>Si tú no ves al conductor del camión en sus espejos, él tampoco te ve a ti.</strong></p>
+
+                    <a href="https://app.lumi.education/run/dj0Xvw" target="_blank" class="h5p-btn">
+                        📚 VER CONTENIDO INTERACTIVO (H5P)
+                    </a>
+                    <span class="h5p-hint">Se abrirá en una nueva pestaña (Recomendado para WhatsApp)</span>
+                </div>
+            </div>
+
+            <div id="cap3" class="chapter">
+                <a href="javascript:void(0)" onclick="openActivityModal('index_bundled.html?cap=cap3')"
+                    class="chapter-toggle" style="text-decoration:none; color:inherit; display:block;">
+                    <div class="card-header">
+                        <div class="card-icon-badge">
+                            <svg fill="none" stroke="var(--gcba-yellow)" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                            <span class="card-badge">Capítulo 3</span>
+                        </div>
+                        <div class="card-arrow">&rarr;</div>
+                    </div>
+                    <h2 class="card-title">La Fragilidad del Cuerpo Humano</h2>
+                </a>
+                <div class="chapter-content-body">
+
+                    <p>Los motociclistas son usuarios vulnerables de la vía pública. La falta de una estructura
+                        protectora
+                        los
+                        expone a lesiones graves en caso de siniestros.</p>
+
+                    <div class="alert alert-info">
+                        <strong>Estadística Vital:</strong> El casco reduce un 85% las probabilidades de lesiones graves
+                        (fractura de cráneo y daño cerebral).
+                    </div>
+
+                    <h3>Equivalencia de Impactos</h3>
+                    <p>Chocar en moto equivale a caer desde una altura considerable:</p>
+                    <ul>
+                        <li>30 km/h = Caer desde 3.5 metros (1 piso)</li>
+                        <li>60 km/h = Caer desde 14 metros (5 pisos)</li>
+                        <li>80 km/h = Caer desde 25 metros (8 pisos)</li>
+                        <li>100 km/h = Caer desde 39 metros (13 pisos)</li>
+                    </ul>
+
+                    <h3>Equipamiento de Protección</h3>
+                    <ul>
+                        <li><strong>Casco Integral:</strong> Obligatorio, homologado IRAM AITA 3621, vida útil 3 años
+                        </li>
+                        <li><strong>Campera con Protección:</strong> Coderas, hombros y espalda reforzados</li>
+                        <li><strong>Guantes:</strong> Protegen manos en caídas (lesiones muy frecuentes)</li>
+                        <li><strong>Botas:</strong> Protección de tobillos y mejor agarre</li>
+                        <li><strong>Pantalones Reforzados:</strong> Evitan abrasiones graves</li>
+                    </ul>
+
+                    <div class="alert alert-warning">
+                        <strong>Recomendación:</strong> Usar SIEMPRE todo el equipo, incluso en trayectos cortos. La
+                        mayoría
+                        de
+                        los siniestros ocurren cerca del hogar.
+                    </div>
+
+                    <a href="https://app.lumi.education/run/Diufs7" target="_blank" class="h5p-btn">
+                        📚 VER CONTENIDO INTERACTIVO (H5P)
+                    </a>
+                    <span class="h5p-hint">Se abrirá en una nueva pestaña (Recomendado para WhatsApp)</span>
+                </div>
+            </div>
+
+            <div id="cap4" class="chapter">
+                <a href="javascript:void(0)" onclick="openActivityModal('index_bundled.html?cap=cap4')"
+                    class="chapter-toggle" style="text-decoration:none; color:inherit; display:block;">
+                    <div class="card-header">
+                        <div class="card-icon-badge">
+                            <svg fill="none" stroke="var(--gcba-yellow)" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.83-5.83M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span class="card-badge">Capítulo 4</span>
+                        </div>
+                        <div class="card-arrow">&rarr;</div>
+                    </div>
+                    <h2 class="card-title">Fuerza de Inercia y Fuerza de Fricción</h2>
+                </a>
+                <div class="chapter-content-body">
+
+                    <p>Comprender las fuerzas físicas que actúan durante la conducción permite anticipar y manejar
+                        situaciones
+                        de riesgo.</p>
+
+                    <h3>Fuerza de Inercia</h3>
+                    <p>La inercia es la resistencia de un objeto a cambiar su estado de movimiento. En conducción:</p>
+                    <ul>
+                        <li>Un vehículo en movimiento tiende a seguir en línea recta</li>
+                        <li>Requiere fuerza (fricción) para cambiar de dirección o detenerse</li>
+                        <li>A mayor velocidad, mayor inercia, más difícil frenar o girar</li>
+                    </ul>
+
+                    <h3>Fuerza de Fricción</h3>
+                    <p>La fricción es la adherencia entre los neumáticos y la calzada. Depende de:</p>
+                    <ul>
+                        <li><strong>Estado de los neumáticos:</strong> Dibujo, presión, desgaste</li>
+                        <li><strong>Superficie:</strong> Asfalto seco tiene mayor fricción que mojado</li>
+                        <li><strong>Carga:</strong> Distribución del peso en la moto</li>
+                        <li><strong>Temperatura:</strong> Neumáticos fríos tienen menos agarre</li>
+                    </ul>
+
+                    <h3>Sistemas de Frenado</h3>
+
+                    <p><strong>ABS (Sistema Antibloqueo):</strong></p>
+                    <ul>
+                        <li>Evita que las ruedas se bloqueen al frenar</li>
+                        <li>Permite mantener el control direccional</li>
+                        <li>Fundamental en frenadas de emergencia</li>
+                    </ul>
+
+                    <p><strong>CBS (Sistema de Frenado Combinado):</strong></p>
+                    <ul>
+                        <li>Distribuye automáticamente la fuerza entre ambas ruedas</li>
+                        <li>Ideal para conductores principiantes</li>
+                        <li>Frenado equilibrado sin técnica avanzada</li>
+                    </ul>
+
+                    <div class="alert alert-info">
+                        <strong>Recomendación:</strong> Practicar frenadas en lugares seguros para conocer cómo responde
+                        tu
+                        moto.
+                    </div>
+
+                    <a href="https://app.lumi.education/run/Fq-2FJ" target="_blank" class="h5p-btn">
+                        📚 VER CONTENIDO INTERACTIVO (H5P)
+                    </a>
+                    <span class="h5p-hint">Se abrirá en una nueva pestaña (Recomendado para WhatsApp)</span>
+                </div>
+            </div>
+
+            <div id="cap5" class="chapter">
+                <a href="javascript:void(0)" onclick="openActivityModal('index_bundled.html?cap=cap5')"
+                    class="chapter-toggle" style="text-decoration:none; color:inherit; display:block;">
+                    <div class="card-header">
+                        <div class="card-icon-badge">
+                            <svg fill="none" stroke="var(--gcba-yellow)" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                            </svg>
+                            <span class="card-badge">Capítulo 5</span>
+                        </div>
+                        <div class="card-arrow">&rarr;</div>
+                    </div>
+                    <h2 class="card-title">Condiciones Meteorológicas Adversas</h2>
+                </a>
+                <div class="chapter-content-body">
+
+                    <p>El clima puede cambiar rápidamente y afectar significativamente la seguridad. Es fundamental
+                        saber
+                        cómo
+                        adaptar la conducción.</p>
+
+                    <h3>Lluvia</h3>
+                    <ul>
+                        <li>Reducir velocidad 20-30%</li>
+                        <li>Aumentar distancia de seguimiento al doble</li>
+                        <li>Evitar charcos (riesgo de aquaplaning)</li>
+                        <li>No frenar ni girar sobre pintura blanca mojada</li>
+                        <li>Usar equipo impermeable</li>
+                    </ul>
+
+                    <div class="alert alert-danger">
+                        <strong>Aquaplaning:</strong> Cuando una capa de agua hace que los neumáticos pierdan contacto
+                        con
+                        el
+                        asfalto. Extremadamente peligroso en motos.
+                    </div>
+
+                    <h3>Viento Fuerte</h3>
+                    <ul>
+                        <li>Sujetar firmemente el manillar</li>
+                        <li>Anticipar efecto Venturi cerca de camiones</li>
+                        <li>Reducir velocidad en puentes y zonas abiertas</li>
+                        <li>Inclinar el cuerpo contra el viento</li>
+                        <li>Usar protección ocular obligatoria</li>
+                    </ul>
+
+                    <h3>Niebla</h3>
+                    <ul>
+                        <li>Usar luces bajas (las altas rebotan y enceguecen)</li>
+                        <li>Reducir velocidad drásticamente</li>
+                        <li>Usar referencias laterales (líneas demarcatorias)</li>
+                        <li>Si no ves nada, detente fuera de la calzada</li>
+                    </ul>
+
+                    <div class="alert alert-warning">
+                        <strong>Consejo General:</strong> Si las condiciones climáticas son extremas, considera
+                        reprogramar
+                        el
+                        viaje. Ningún destino vale tu seguridad.
+                    </div>
+
+                    <a href="https://app.lumi.education/run/xAEoUL" target="_blank" class="h5p-btn">
+                        📚 VER CONTENIDO INTERACTIVO (H5P)
+                    </a>
+                    <span class="h5p-hint">Se abrirá en una nueva pestaña (Recomendado para WhatsApp)</span>
+                </div>
+            </div>
+
+            <div id="cap6" class="chapter">
+                <a href="javascript:void(0)"
+                    onclick="openActivityModal('actividades-extra/index.html?embedded=true#/modules')"
+                    class="chapter-toggle" style="text-decoration:none; color:inherit; display:block;">
+                    <div class="card-header">
+                        <div class="card-icon-badge">
+                            <svg fill="none" stroke="var(--gcba-yellow)" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 2.5L4.2 6.8v4.4L12 15.5l7.8-4.3V6.8L12 2.5z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 15.5v6M4.2 11.2l7.8 4.3 7.8-4.3" />
+                            </svg>
+                            <span class="card-badge">Capítulo 6</span>
+                        </div>
+                        <div class="card-arrow">&rarr;</div>
+                    </div>
+                    <h2 class="card-title">Señales Viales</h2>
+                </a>
+                <div class="chapter-content-body">
+
+                    <img src="senales_viales_hero.png" alt="Señales Viales - Tipos de señalización vial argentina"
+                        style="width:100%; border-radius:8px; margin-bottom:20px; border:1px solid rgba(255,255,255,0.1);">
+
+                    <p>Las señales viales son el lenguaje universal de la vía pública. Conocerlas y respetarlas es
+                        fundamental para la seguridad de todos los usuarios del tránsito: conductores, motociclistas,
+                        ciclistas y peatones.</p>
+
+                    <div class="alert alert-info">
+                        <strong>Dato Clave:</strong> En Argentina, la señalización vial está regulada por la Ley
+                        Nacional de Tránsito N° 24.449 y sigue los estándares del Manual de Señalamiento Vial de la
+                        Dirección Nacional de Vialidad.
+                    </div>
+
+                    <h3>🔶 Señales Preventivas</h3>
+                    <p>Son de <strong>forma de rombo</strong> con fondo <strong>amarillo</strong> y símbolos negros.
+                        Advierten al conductor sobre peligros o situaciones especiales que se encontrará más adelante.
+                    </p>
+                    <ul>
+                        <li><strong>Curva peligrosa:</strong> Indica una curva pronunciada, reducir velocidad</li>
+                        <li><strong>Cruce de peatones:</strong> Zona donde cruzan peatones frecuentemente</li>
+                        <li><strong>Empalme lateral:</strong> Advierte la incorporación de otra vía</li>
+                        <li><strong>Estrechamiento de calzada:</strong> La vía se angosta más adelante</li>
+                        <li><strong>Paso a nivel:</strong> Cruce con vías del ferrocarril</li>
+                        <li><strong>Animales sueltos:</strong> Zona con posible presencia de animales en la vía</li>
+                    </ul>
+
+                    <div class="alert alert-warning">
+                        <strong>Importante:</strong> Las señales preventivas se ubican a una distancia previa al peligro
+                        para que el conductor tenga tiempo de reaccionar. En zona urbana: 100-150 m antes; en zona
+                        rural: 200-300 m antes.
+                    </div>
+
+                    <h3>🔴 Señales Reglamentarias</h3>
+                    <p>Son de <strong>forma circular</strong> con fondo <strong>blanco</strong> y borde
+                        <strong>rojo</strong>. Indican obligaciones, restricciones y prohibiciones que el conductor
+                        <strong>debe cumplir obligatoriamente</strong>.
+                    </p>
+                    <ul>
+                        <li><strong>PARE (octágono rojo):</strong> Detención total obligatoria antes de continuar</li>
+                        <li><strong>Velocidad máxima:</strong> Límite máximo permitido en esa vía</li>
+                        <li><strong>Prohibido estacionar:</strong> No se permite detenerse ni estacionar</li>
+                        <li><strong>Prohibido girar:</strong> No se puede doblar en la dirección indicada</li>
+                        <li><strong>Contramano:</strong> Prohibido circular en ese sentido</li>
+                        <li><strong>Ceda el paso:</strong> Debe dar prioridad a los vehículos de la otra vía</li>
+                    </ul>
+
+                    <div class="alert alert-danger">
+                        <strong>¡Atención!</strong> No respetar las señales reglamentarias es una infracción grave que
+                        puede generar multas, retención del vehículo y, lo más importante, poner en riesgo tu vida y la
+                        de los demás.
+                    </div>
+
+                    <h3>🟢 Señales Informativas</h3>
+                    <p>Son de <strong>forma rectangular</strong> con fondo <strong>verde</strong> (rutas y destinos) o
+                        <strong>azul</strong> (servicios). Brindan información útil sobre destinos, distancias y
+                        servicios disponibles.
+                    </p>
+                    <ul>
+                        <li><strong>Nombre de calle/ruta:</strong> Identifica la vía por la que se circula</li>
+                        <li><strong>Distancia a destinos:</strong> Kilómetros restantes a ciudades o localidades</li>
+                        <li><strong>Hospital:</strong> Cercanía de un centro de salud</li>
+                        <li><strong>Estación de servicio:</strong> Disponibilidad de combustible cercano</li>
+                        <li><strong>Estacionamiento permitido:</strong> Zona habilitada para estacionar</li>
+                        <li><strong>Teléfono de emergencia:</strong> Acceso a comunicación de auxilio</li>
+                    </ul>
+
+                    <h3>🟠 Señales Transitorias</h3>
+                    <p>Son de fondo <strong>naranja</strong> y se utilizan en zonas de obra o trabajos en la vía.
+                        Tienen carácter <strong>temporal</strong> y prevalecen sobre la señalización permanente.</p>
+                    <ul>
+                        <li><strong>Obreros trabajando:</strong> Presencia de personal en la calzada</li>
+                        <li><strong>Desvío:</strong> Camino alternativo por obras en la vía</li>
+                        <li><strong>Calzada irregular:</strong> Superficie en mal estado temporalmente</li>
+                        <li><strong>Fin de zona de obra:</strong> Retorno a condiciones normales de circulación</li>
+                    </ul>
+
+                    <div class="alert alert-warning">
+                        <strong>Recordá:</strong> En zonas de obra la velocidad máxima se reduce significativamente.
+                        Respetá siempre las indicaciones del personal de tránsito y las señales transitorias, ya que
+                        prevalecen sobre las señales permanentes.
+                    </div>
+
+                    <h3>Jerarquía de la Señalización</h3>
+                    <p>Cuando hay señales contradictorias, se respeta este orden de prioridad:</p>
+                    <ul>
+                        <li><strong>1°</strong> Indicaciones del agente de tránsito</li>
+                        <li><strong>2°</strong> Señales transitorias (obras)</li>
+                        <li><strong>3°</strong> Semáforo</li>
+                        <li><strong>4°</strong> Señales verticales (carteles)</li>
+                        <li><strong>5°</strong> Demarcación horizontal (pintado en el piso)</li>
+                    </ul>
+
+                    <div class="alert alert-info">
+                        <strong>Consejo para motociclistas:</strong> Prestá especial atención a las señales de
+                        velocidad máxima y a las zonas de curva. En moto, el margen de error es mucho menor que en un
+                        auto. Respetá siempre los límites indicados.
+                    </div>
+
+                    <a href="javascript:void(0)"
+                        onclick="openActivityModal('actividades-extra/index.html?embedded=true#/modules')"
+                        class="h5p-btn">
+                        📚 VER CONTENIDO INTERACTIVO — SEÑALES
+                    </a>
+                    <span class="h5p-hint">Se abrirá el módulo de Señales de Tránsito</span>
+                </div>
+            </div>
+
+        </div> <!-- Cierra chapter-grid -->
+
+        <footer>
+            <img src="logo.png" alt="Logo CFL 412 ASIMM" class="footer-logo">
+            <p><strong>Curso de Seguridad e Higiene para Motociclistas</strong></p>
+            <p>CFL N° 412 - ASIMM</p>
+            <p>Versión Digital - Alejandro Malara - 2026</p>
+        </footer>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" id="closeLoginBtn">&times;</button>
+            <h2 class="card-title" style="margin-bottom: 24px;">INICIO DE SESIÓN</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="text" class="form-input" id="loginNombre" placeholder="Nombre" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" id="loginApellido" placeholder="Apellido" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-input" id="loginEdad" placeholder="Edad" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-input" id="loginDni" placeholder="DNI" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" id="loginEmail" placeholder="Correo Electrónico" required>
+                </div>
+                <div class="form-group">
+                    <select class="form-input" id="loginCfp" required
+                        style="cursor: pointer; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23ffffff%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 10px center;">
+                        <option value="" disabled selected>Selecciona tu Centro de Formación Laboral (CFL)</option>
+                        <option value="CFP N° 1">CFL N° 412 - ASIMM (Mensajeros y Delivery)</option>
+                        <option value="CFP N° 4">CFL N° 412 - Delegación Central</option>
+                        <option value="CFP N° 6">CFL N° 412 - Cursos de Conducción</option>
+                        <option value="CFP N° 7">CFL N° 412 - Anexo Sur</option>
+                        <option value="CFP N° 10">CFL N° 412 - Delegación La Plata</option>
+                        <option value="CFP N° 28">CFL N° 412 - Delegación Mar del Plata</option>
+                        <option value="CFP N° 34">CFL N° 412 - Delegación Bahía Blanca</option>
+                        <option value="CFP N° 38">CFL N° 412 - Delegación Tandil</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">INGRESAR &rarr;</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modulosBtn = document.getElementById('modulosBtn');
+            const modulosDropdown = document.getElementById('modulosDropdown');
+
+            if (modulosBtn && modulosDropdown) {
+                modulosBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    modulosDropdown.classList.toggle('active');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!modulosBtn.contains(e.target) && !modulosDropdown.contains(e.target)) {
+                        modulosDropdown.classList.remove('active');
+                    }
+                });
+
+                const dropdownLinks = document.querySelectorAll('.dropdown-link');
+                dropdownLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        modulosDropdown.classList.remove('active');
+                    });
+                });
+            }
+
+
+
+
+            const openLoginBtn = document.getElementById('openLoginBtn');
+            const closeLoginBtn = document.getElementById('closeLoginBtn');
+            const loginModal = document.getElementById('loginModal');
+            const loginForm = document.getElementById('loginForm');
+
+            if (openLoginBtn && closeLoginBtn && loginModal) {
+                openLoginBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loginModal.classList.add('active');
+                });
+
+                closeLoginBtn.addEventListener('click', () => {
+                    loginModal.classList.remove('active');
+                });
+
+                loginModal.addEventListener('click', (e) => {
+                    if (e.target === loginModal) {
+                        loginModal.classList.remove('active');
+                    }
+                });
+
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    // Basic validation
+                    const nombre = document.getElementById('loginNombre').value;
+                    if (nombre) {
+                        alert(`¡Hola ${nombre}! Ingreso exitoso.`);
+                    }
+                    loginModal.classList.remove('active');
+
+                    // Auto-scroll to cap 1 after login
+                    setTimeout(() => {
+                        const cap1 = document.getElementById('cap1');
+                        if (cap1) cap1.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                });
+            }
+        });
+    </script>
+
+    <!-- Modal for External Activities -->
+    <div class="activity-modal-overlay" id="activityModal">
+        <button class="activity-modal-close" onclick="closeActivityModal()">&times;</button>
+        <div class="activity-modal-content">
+            <iframe class="activity-iframe" id="activityIframe" src=""></iframe>
+        </div>
+    </div>
+    <style>
+        .activity-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 8, 20, 0.95);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .activity-modal-overlay.active {
+            display: flex;
+        }
+
+        .activity-modal-content {
+            width: 95%;
+            height: 95%;
+            background: #001d3d;
+            border: 2px solid var(--gcba-yellow);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .activity-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gcba-orange);
+            color: white;
+            border: none;
+            font-size: 28px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            transition: transform 0.2s;
+            line-height: 1;
+        }
+
+        .activity-modal-close:hover {
+            transform: scale(1.1);
+            background: #ff2a22;
+        }
+
+        .activity-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+    </style>
+    <script>
+        function openActivityModal(url) {
+            document.getElementById('activityIframe').src = url;
+            document.getElementById('activityModal').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling background
+        }
+        function closeActivityModal() {
+            document.getElementById('activityModal').classList.remove('active');
+            document.getElementById('activityIframe').src = '';
+            document.body.style.overflow = '';
+        }
+    </script>
+</body>
+
+</html>
